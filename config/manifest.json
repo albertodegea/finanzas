@@ -1,0 +1,25 @@
+{
+    "name": "Gestor de Finanzas Personal",
+    "short_name": "Finanzas",
+    "description": "Aplicación para gestionar ingresos y gastos personales de forma simple e intuitiva",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1a1a1a",
+    "theme_color": "#9333ea",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxwYXRoIGQ9Ik05NiA2NEMyMi4yNjYgNjQgNTIgOTMuNzM0IDUyIDEyOEM1MiAxNjIuMjY2IDc5LjczNCAxOTAgMTE0IDE5MEM3OS43MzQgMTkwIDUyIDE2Mi4yNjYgNTIgMTI4QzUyIDkzLjczNCA3OS43MzQgNjYgMTE0IDY2QzEzMC4yNjYgNjYgMTQ1IDE4LjczNCA5NiA2NFoiIGZpbGw9IiNGRkZGRkYiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQwX2xpbmVhcl8xXzEiIHgxPSIwIiB5MT0iMCIgeDI9IjE5MiIgeTI9IjE5MiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjOTMzM0VBIi8+CjxzdG9wIG9mZnNldD0iMC41IiBzdG9wLWNvbG9yPSIjN0MzQUVEIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzZEMjhEOSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=",
+            "sizes": "192x192",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iNjQiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxwYXRoIGQ9Ik0yNTYgMTcwQzE5OC43MTIgMTcwIDEzOCAyMzAuNzEyIDEzOCAyODhDMTM4IDM0NS4yODggMTk4LjcxMiA0MDYgMjU2IDQwNkMzMTMuMjg4IDQwNiAzNzQgMzQ1LjI4OCAzNzQgMjg4QzM3NCAyMzAuNzEyIDMxMy4yODggMTcwIDI1NiAxNzBaTTI1NiAzNTBDMjI5LjQ5IDM1MCAyMDggMzI4LjUxIDIwOCAzMDJDMjA4IDI3NS40OSAyMjkuNDkgMjU0IDI1NiAyNTRDMjgyLjUxIDI1NCAzMDQgMjc1LjQ5IDMwNCAzMDJDMzA0IDMyOC41MSAyODIuNTEgMzUwIDI1NiAzNTBaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0zNzQgMjMwSDM0NkMzNDYgMjA0LjQ5IDMyNS41MSAxODQgMzAwIDE4NEgyMTJDMTg2LjQ5IDE4NCAxNjYgMjA0LjQ5IDE2NiAyMzBIMTM4QzEyNS4yOTcgMjMwIDExNCAyNDEuMjk3IDExNCAyNTRWMzgyQzExNCAzOTQuNzAzIDEyNS4yOTcgNDA2IDEzOCA0MDZIMzc0QzM4Ni43MDMgNDA2IDM5OCAzOTQuNzAzIDM5OCAzODJWMjU0QzM5OCAyNDEuMjk3IDM4Ni43MDMgMjMwIDM3NCAyMzBaTTM1MCAzNjJIMTYyVjI3OEgzNTBWMzYyWiIgZmlsbD0iI0ZGRkZGRiIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDBfbGluZWFyXzFfMSIgeDE9IjAiIHkxPSIwIiB4Mj0iNTEyIiB5Mj0iNTEyIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiM5MzMzRUEiLz4KPHN0b3Agb2Zmc2V0PSIwLjUiIHN0b3AtY29sb3I9IiM3QzNBRUQiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNkQyOEQ5Ii8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPC9zdmc+Cg==",
+            "sizes": "512x512",
+            "type": "image/svg+xml"
+        }
+    ],
+    "categories": ["finance", "productivity", "business"],
+    "lang": "es",
+    "dir": "ltr"
+}

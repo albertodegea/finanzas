@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Finanzas</title>
+    <meta name="description" content="Aplicación web para gestionar tus ingresos y gastos de forma simple e intuitiva">
+    <meta name="theme-color" content="#9333ea">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="assets/styles/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💰 Gestor de Finanzas</h1>
+            <div class="balance">
+                <h2>Balance Total: <span id="balance">€0.00</span></h2>
+            </div>
+        </header>
+
+        <main>
+            <!-- Botones para mostrar formularios -->
+            <section class="action-buttons">
+                <button id="addIncomeBtn" class="btn-income">+ Ingreso</button>
+                <button id="addExpenseBtn" class="btn-expense">+ Gasto</button>
+                <button id="addSavingBtn" class="btn-saving">💰 Ahorros</button>
+            </section>
+
+            <!-- Formulario para añadir transacciones (inicialmente oculto) -->
+            <section class="transaction-form" id="transactionForm" style="display: none;">
+                <div class="form-header">
+                    <h3 id="formTitle">Nueva Transacción</h3>
+                    <button type="button" id="closeFormBtn" class="btn-close">✕</button>
+                </div>
+                <form id="transactionFormElement">
+                    <input type="hidden" id="transactionType" value="">
+
+                    <div class="form-group">
+                        <label for="amount">Cantidad:</label>
+                        <input type="number" id="amount" step="0.01" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Descripción:</label>
+                        <input type="text" id="description">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Categoría:</label>
+                        <select id="category" required>
+                            <!-- Ingresos -->
+                            <optgroup label="Ingresos">
+                                <option value="salary">💼 Nómina</option>
+                                <option value="freelance">💻 Freelance</option>
+                                <option value="investment">📈 Inversiones</option>
+                                <option value="haircut-income">✂️ Corte de pelo</option>
+                                <option value="other-income">💡 Otros ingresos</option>
+                            </optgroup>
+                            <!-- Gastos -->
+                            <optgroup label="Gastos">
+                                <option value="fuel">⛽ Gasolina</option>
+                                <option value="transport">🚌 Transporte</option>
+                                <option value="food">🍕 Comida</option>
+                                <option value="shopping">🛒 Compras</option>
+                                <option value="entertainment">🎬 Ocio</option>
+                                <option value="bills">💡 Facturas</option>
+                                <option value="rent">🏠 Alquiler</option>
+                                <option value="health">⚕️ Salud</option>
+                                <option value="hairdresser">💇 Peluquero</option>
+                                <option value="mechanic">🔧 Mecánico</option>
+                                <option value="insurance">🛡️ Seguros</option>
+                                <option value="education">📚 Educación</option>
+                                <option value="gym">💪 Gimnasio</option>
+                                <option value="subscriptions">📺 Suscripciones</option>
+                                <option value="clothing">👕 Ropa</option>
+                                <option value="gifts">🎁 Regalos</option>
+                                <option value="pets">🐕 Mascotas</option>
+                                <option value="home-maintenance">🏡 Mantenimiento Casa</option>
+                                <option value="fines">🚨 Multas</option>
+                                <option value="savings">💰 Ahorros</option>
+                                <option value="other-expense">💸 Otros gastos</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group">Grupo:</label>
+                        <select id="group" required>
+                            <option value="fixed">📋 Gastos Fijos</option>
+                            <option value="variable">📊 Gastos Variables</option>
+                            <option value="entertainment">🎉 Ocio</option>
+                            <option value="essential">🏠 Esenciales</option>
+                            <option value="investment">💎 Inversiones</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancelBtn" class="btn-secondary">Cancelar</button>
+                        <button type="submit" id="submitBtn" class="btn-primary">Añadir Transacción</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Resumen -->
+            <section class="summary-section">
+                <div class="summary-cards">
+                    <div class="card income-card">
+                        <h3>Ingresos</h3>
+                        <p id="totalIncome">€0.00</p>
+                    </div>
+                    <div class="card expense-card">
+                        <h3>Gastos</h3>
+                        <p id="totalExpenses">€0.00</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formulario para nuevas metas de ahorro -->
+            <section class="goal-form" id="goalForm" style="display: none;">
+                <div class="form-header">
+                    <h3>🎯 Nueva Meta de Ahorro</h3>
+                    <button type="button" id="closeGoalFormBtn" class="btn-close">✕</button>
+                </div>
+                <form id="goalFormElement">
+                    <div class="form-group">
+                        <label for="goalName">Nombre de la meta:</label>
+                        <input type="text" id="goalName" required placeholder="Ej: Vacaciones de verano">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="goalAmount">Cantidad objetivo:</label>
+                        <input type="number" id="goalAmount" step="0.01" min="0" required placeholder="0.00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="goalDeadline">Fecha límite (opcional):</label>
+                        <input type="date" id="goalDeadline">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="goalDescription">Descripción (opcional):</label>
+                        <textarea id="goalDescription" rows="3" placeholder="Describe tu meta de ahorro..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancelGoalBtn" class="btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn-primary">Crear Meta</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Panel principal: movimientos + gráfica -->
+            <section class="main-panel">
+                <div class="left-column">
+                    <div class="transactions-panel">
+                        <div class="list-header">
+                            <h3>Historial de Transacciones</h3>
+                            <div class="filters">
+                                <select id="filterGroup">
+                                    <option value="all">Todos los grupos</option>
+                                    <option value="fixed">📋 Gastos Fijos</option>
+                                    <option value="variable">📊 Gastos Variables</option>
+                                    <option value="entertainment">🎉 Ocio</option>
+                                    <option value="essential">🏠 Esenciales</option>
+                                    <option value="investment">💎 Inversiones</option>
+                                </select>
+                                <button id="clearAll" class="btn-filter">Limpiar Todo</button>
+                            </div>
+                        </div>
+                        <ul id="transactionsList"></ul>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div class="chart-panel">
+                        <div class="chart-container">
+                            <h3>Distribución de Gastos</h3>
+                            <canvas id="expenseChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="savings-panel">
+                        <div class="savings-header">
+                            <h3>💰 Mis Ahorros</h3>
+                            <button id="addGoalBtn" class="btn-primary-small">+ Meta</button>
+                        </div>
+                        
+                        <div class="savings-summary">
+                            <div class="savings-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Total Ahorrado:</span>
+                                    <span class="stat-value" id="totalSavedAmount">€0.00</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Metas Activas:</span>
+                                    <span class="stat-value" id="activeGoalsCount">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Completadas:</span>
+                                    <span class="stat-value" id="completedGoalsCount">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="savings-goals-compact">
+                            <div id="goalsList" class="goals-list-compact">
+                                <div class="no-goals">
+                                    <p>🎯 Sin metas de ahorro</p>
+                                    <p>¡Crea tu primera meta!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        </main>
+    </div>
+
+    <script src="assets/javascript/main.js"></script>
+</body>
+</html>
