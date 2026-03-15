@@ -3,223 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Finanzas</title>
-    <meta name="description" content="Aplicación web para gestionar tus ingresos y gastos de forma simple e intuitiva">
-    <meta name="theme-color" content="#9333ea">
-    <meta property="og:image" content="https://albertodg11.github.io/finanzas/assets/media/img.png">
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="assets/styles/styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Control de Finanzas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>💰 Gestor de Finanzas</h1>
-            <div class="balance">
-                <h2>Balance Total: <span id="balance">€0.00</span></h2>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                <span>FinControl</span>
             </div>
-        </header>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link active" data-section="dashboard">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+                <span>Dashboard</span>
+            </a></li>
+            <li><a href="#" class="nav-link" data-section="ingresos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <span>Ingresos</span>
+            </a></li>
+            <li><a href="#" class="nav-link" data-section="gastos-fijos">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                <span>Gastos Fijos</span>
+            </a></li>
+            <li><a href="#" class="nav-link" data-section="gastos-variables">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <span>Gastos Variables</span>
+            </a></li>
+            <li><a href="#" class="nav-link" data-section="ahorros">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2"></path><circle cx="10" cy="10" r="1"></circle></svg>
+                <span>Ahorros</span>
+            </a></li>
+            <li><a href="#" class="nav-link" data-section="deudas">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <span>Deudores</span>
+            </a></li>
+            <li><a href="#" class="nav-link" data-section="historial">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>Historial</span>
+            </a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button class="btn-export" id="btnExport" title="Exportar datos">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Exportar</span>
+            </button>
+            <button class="btn-import" id="btnImport" title="Importar datos">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <span>Importar</span>
+            </button>
+            <input type="file" id="importFile" accept=".json" style="display:none">
+        </div>
+    </nav>
 
-        <main>
-            <!-- Botones para mostrar formularios -->
-            <section class="action-buttons">
-                <button id="addIncomeBtn" class="btn-income">+ Ingreso</button>
-                <button id="addExpenseBtn" class="btn-expense">+ Gasto</button>
-                <button id="addSavingBtn" class="btn-saving">💰 Ahorros</button>
-            </section>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <button class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="logo">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+            <span>FinControl</span>
+        </div>
+        <div class="month-selector-mobile">
+            <select id="monthSelectMobile"></select>
+        </div>
+    </header>
 
-            <!-- Formulario para añadir transacciones (inicialmente oculto) -->
-            <section class="transaction-form" id="transactionForm" style="display: none;">
-                <div class="form-header">
-                    <h3 id="formTitle">Nueva Transacción</h3>
-                    <button type="button" id="closeFormBtn" class="btn-close">✕</button>
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="month-selector">
+                <button id="prevMonth" class="btn-icon" title="Mes anterior">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <span id="currentMonth" class="current-month"></span>
+                <button id="nextMonth" class="btn-icon" title="Mes siguiente">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <section class="section active" id="section-dashboard">
+            <div class="dashboard-header">
+                <h1 class="section-title">Dashboard</h1>
+                <div class="month-selector month-selector-inline">
+                    <button id="prevMonth2" class="btn-icon" title="Mes anterior">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <span id="currentMonth2" class="current-month"></span>
+                    <button id="nextMonth2" class="btn-icon" title="Mes siguiente">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
                 </div>
-                <form id="transactionFormElement">
-                    <input type="hidden" id="transactionType" value="">
-
-                    <div class="form-group">
-                        <label for="amount">Cantidad:</label>
-                        <input type="number" id="amount" step="0.01" min="0" required>
+            </div>
+            <div class="summary-cards">
+                <div class="card card-income">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                     </div>
-
-                    <div class="form-group">
-                        <label for="description">Descripción:</label>
-                        <input type="text" id="description">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="category">Categoría:</label>
-                        <select id="category" required>
-                            <!-- Ingresos -->
-                            <optgroup label="Ingresos">
-                                <option value="salary">💼 Nómina</option>
-                                <option value="freelance">💻 Freelance</option>
-                                <option value="investment">📈 Inversiones</option>
-                                <option value="haircut-income">✂️ Corte de pelo</option>
-                                <option value="other-income">💡 Otros ingresos</option>
-                            </optgroup>
-                            <!-- Gastos -->
-                            <optgroup label="Gastos">
-                                <option value="fuel">⛽ Gasolina</option>
-                                <option value="transport">🚌 Transporte</option>
-                                <option value="food">🍕 Comida</option>
-                                <option value="shopping">🛒 Compras</option>
-                                <option value="entertainment">🎬 Ocio</option>
-                                <option value="bills">💡 Facturas</option>
-                                <option value="rent">🏠 Alquiler</option>
-                                <option value="health">⚕️ Salud</option>
-                                <option value="hairdresser">💇 Peluquero</option>
-                                <option value="mechanic">🔧 Mecánico</option>
-                                <option value="insurance">🛡️ Seguros</option>
-                                <option value="education">📚 Educación</option>
-                                <option value="gym">💪 Gimnasio</option>
-                                <option value="subscriptions">📺 Suscripciones</option>
-                                <option value="clothing">👕 Ropa</option>
-                                <option value="gifts">🎁 Regalos</option>
-                                <option value="pets">🐕 Mascotas</option>
-                                <option value="home-maintenance">🏡 Mantenimiento Casa</option>
-                                <option value="fines">🚨 Multas</option>
-                                <option value="savings">💰 Ahorros</option>
-                                <option value="other-expense">💸 Otros gastos</option>
-                            </optgroup>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="group">Grupo:</label>
-                        <select id="group" required>
-                            <option value="fixed">📋 Gastos Fijos</option>
-                            <option value="variable">📊 Gastos Variables</option>
-                            <option value="entertainment">🎉 Ocio</option>
-                            <option value="essential">🏠 Esenciales</option>
-                            <option value="investment">💎 Inversiones</option>
-                        </select>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" id="cancelBtn" class="btn-secondary">Cancelar</button>
-                        <button type="submit" id="submitBtn" class="btn-primary">Añadir Transacción</button>
-                    </div>
-                </form>
-            </section>
-
-            <!-- Resumen -->
-            <section class="summary-section">
-                <div class="summary-cards">
-                    <div class="card income-card">
-                        <h3>Ingresos</h3>
-                        <p id="totalIncome">€0.00</p>
-                    </div>
-                    <div class="card expense-card">
-                        <h3>Gastos</h3>
-                        <p id="totalExpenses">€0.00</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Formulario para nuevas metas de ahorro -->
-            <section class="goal-form" id="goalForm" style="display: none;">
-                <div class="form-header">
-                    <h3>🎯 Nueva Meta de Ahorro</h3>
-                    <button type="button" id="closeGoalFormBtn" class="btn-close">✕</button>
-                </div>
-                <form id="goalFormElement">
-                    <div class="form-group">
-                        <label for="goalName">Nombre de la meta:</label>
-                        <input type="text" id="goalName" required placeholder="Ej: Vacaciones de verano">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="goalAmount">Cantidad objetivo:</label>
-                        <input type="number" id="goalAmount" step="0.01" min="0" required placeholder="0.00">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="goalDeadline">Fecha límite (opcional):</label>
-                        <input type="date" id="goalDeadline">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="goalDescription">Descripción (opcional):</label>
-                        <textarea id="goalDescription" rows="3" placeholder="Describe tu meta de ahorro..."></textarea>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" id="cancelGoalBtn" class="btn-secondary">Cancelar</button>
-                        <button type="submit" class="btn-primary">Crear Meta</button>
-                    </div>
-                </form>
-            </section>
-
-            <!-- Panel principal: movimientos + gráfica -->
-            <section class="main-panel">
-                <div class="left-column">
-                    <div class="transactions-panel">
-                        <div class="list-header">
-                            <h3>Historial de Transacciones</h3>
-                            <div class="filters">
-                                <select id="filterGroup">
-                                    <option value="all">Todos los grupos</option>
-                                    <option value="fixed">📋 Gastos Fijos</option>
-                                    <option value="variable">📊 Gastos Variables</option>
-                                    <option value="entertainment">🎉 Ocio</option>
-                                    <option value="essential">🏠 Esenciales</option>
-                                    <option value="investment">💎 Inversiones</option>
-                                </select>
-                                <button id="clearAll" class="btn-filter">Limpiar Todo</button>
-                            </div>
-                        </div>
-                        <ul id="transactionsList"></ul>
+                    <div class="card-info">
+                        <span class="card-label">Ingresos</span>
+                        <span class="card-value" id="totalIncome">€0.00</span>
                     </div>
                 </div>
-
-                <div class="right-column">
-                    <div class="chart-panel">
-                        <div class="chart-container">
-                            <h3>Distribución de Gastos</h3>
-                            <canvas id="expenseChart"></canvas>
-                        </div>
+                <div class="card card-expense">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>
                     </div>
-                    
-                    <div class="savings-panel">
-                        <div class="savings-header">
-                            <h3>💰 Mis Ahorros</h3>
-                            <button id="addGoalBtn" class="btn-primary-small">+ Meta</button>
-                        </div>
-                        
-                        <div class="savings-summary">
-                            <div class="savings-stats">
-                                <div class="stat-item">
-                                    <span class="stat-label">Total Ahorrado:</span>
-                                    <span class="stat-value" id="totalSavedAmount">€0.00</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Metas Activas:</span>
-                                    <span class="stat-value" id="activeGoalsCount">0</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Completadas:</span>
-                                    <span class="stat-value" id="completedGoalsCount">0</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="savings-goals-compact">
-                            <div id="goalsList" class="goals-list-compact">
-                                <div class="no-goals">
-                                    <p>🎯 Sin metas de ahorro</p>
-                                    <p>¡Crea tu primera meta!</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="card-info">
+                        <span class="card-label">Gastos Totales</span>
+                        <span class="card-value" id="totalExpenses">€0.00</span>
                     </div>
                 </div>
-            </section>
+                <div class="card card-balance">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-label">Balance</span>
+                        <span class="card-value" id="totalBalance">€0.00</span>
+                    </div>
+                </div>
+                <div class="card card-savings">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2"></path><circle cx="10" cy="10" r="1"></circle></svg>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-label">Ahorros</span>
+                        <span class="card-value" id="totalSavings">€0.00</span>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Charts area -->
+            <div class="charts-row">
+                <div class="chart-container">
+                    <h3>Distribución de Gastos</h3>
+                    <canvas id="expenseChart"></canvas>
+                    <div id="expenseChartLegend" class="chart-legend"></div>
+                </div>
+                <div class="chart-container">
+                    <h3>Ingresos vs Gastos (6 meses)</h3>
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
 
-        </main>
+            <!-- Recent transactions -->
+            <div class="recent-section">
+                <h3>Movimientos Recientes</h3>
+                <div class="transactions-list" id="recentTransactions">
+                    <p class="empty-msg">No hay movimientos este mes</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ingresos Section -->
+        <section class="section" id="section-ingresos">
+            <div class="section-header">
+                <h1 class="section-title">Ingresos</h1>
+                <button class="btn-primary" id="btnAddIncome">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Añadir Ingreso
+                </button>
+            </div>
+            <div class="data-list" id="incomeList">
+                <p class="empty-msg">No hay ingresos registrados</p>
+            </div>
+        </section>
+
+        <!-- Gastos Fijos Section -->
+        <section class="section" id="section-gastos-fijos">
+            <div class="section-header">
+                <h1 class="section-title">Gastos Fijos</h1>
+                <button class="btn-primary" id="btnAddFixedExpense">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Añadir Gasto Fijo
+                </button>
+            </div>
+            <div class="data-list" id="fixedExpenseList">
+                <p class="empty-msg">No hay gastos fijos registrados</p>
+            </div>
+        </section>
+
+        <!-- Gastos Variables Section -->
+        <section class="section" id="section-gastos-variables">
+            <div class="section-header">
+                <h1 class="section-title">Gastos Variables</h1>
+                <button class="btn-primary" id="btnAddVariableExpense">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Añadir Gasto Variable
+                </button>
+            </div>
+            <div class="data-list" id="variableExpenseList">
+                <p class="empty-msg">No hay gastos variables registrados</p>
+            </div>
+        </section>
+
+        <!-- Ahorros Section -->
+        <section class="section" id="section-ahorros">
+            <div class="section-header">
+                <h1 class="section-title">Ahorros</h1>
+                <button class="btn-primary" id="btnAddSaving">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Nuevo Objetivo
+                </button>
+            </div>
+            <div class="savings-grid" id="savingsList">
+                <p class="empty-msg">No hay objetivos de ahorro</p>
+            </div>
+        </section>
+
+        <!-- Deudas Section -->
+        <section class="section" id="section-deudas">
+            <div class="section-header">
+                <h1 class="section-title">Deudores</h1>
+                <button class="btn-primary" id="btnAddDebt">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Añadir Deuda
+                </button>
+            </div>
+            <div class="data-list" id="debtList">
+                <p class="empty-msg">No hay deudas registradas</p>
+            </div>
+        </section>
+
+        <!-- Historial Section -->
+        <section class="section" id="section-historial">
+            <div class="section-header">
+                <h1 class="section-title">Historial</h1>
+                <div class="filter-group">
+                    <select id="historyFilter" class="select-input">
+                        <option value="all">Todos</option>
+                        <option value="income">Ingresos</option>
+                        <option value="fixed">Gastos Fijos</option>
+                        <option value="variable">Gastos Variables</option>
+                        <option value="saving">Ahorros</option>
+                        <option value="debt">Deudas</option>
+                    </select>
+                </div>
+            </div>
+            <div class="data-list" id="historyList">
+                <p class="empty-msg">No hay registros en el historial</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- FAB -->
+    <div class="fab-container" id="fabContainer">
+        <div class="fab-menu" id="fabMenu">
+            <button class="fab-option" data-action="income">
+                <span class="fab-option-icon" style="background:var(--green-soft);color:var(--green)">💰</span>
+                <span>Ingreso</span>
+            </button>
+            <button class="fab-option" data-action="fixed">
+                <span class="fab-option-icon" style="background:var(--red-soft);color:var(--red)">🏠</span>
+                <span>Gasto Fijo</span>
+            </button>
+            <button class="fab-option" data-action="variable">
+                <span class="fab-option-icon" style="background:var(--red-soft);color:var(--red)">🛒</span>
+                <span>Gasto Variable</span>
+            </button>
+            <button class="fab-option" data-action="saving">
+                <span class="fab-option-icon" style="background:var(--yellow-soft);color:var(--yellow)">🐷</span>
+                <span>Ahorro</span>
+            </button>
+            <button class="fab-option" data-action="debt">
+                <span class="fab-option-icon" style="background:var(--blue-soft);color:var(--blue)">👤</span>
+                <span>Deudor</span>
+            </button>
+        </div>
+        <button class="fab-btn" id="fabBtn" title="Añadir nuevo">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
     </div>
 
-    <script src="assets/javascript/main.js"></script>
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Título</h2>
+                <button class="modal-close" id="modalClose">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="app.js"></script>
 </body>
 </html>
